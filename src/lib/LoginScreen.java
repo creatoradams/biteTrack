@@ -49,7 +49,7 @@ public class LoginScreen extends JPanel
         // “Register here” link / button
         form.add(registerButton());
 
-        /* ------------- DROP THE FORM INTO THE CENTRE CELL --------- */
+        /* put the  column in the center */
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx   = 0;                          // column 0
         gbc.gridy   = 0;                          // row    0
@@ -59,9 +59,7 @@ public class LoginScreen extends JPanel
         add(form, gbc);                           // finally add to JPanel
     }
 
-    /* --------------------------------------------------------------
-       Helper: makes the big title label (“Login”)
-     -------------------------------------------------------------- */
+    /* Helper: makes the big title label (“Login”) */
     private JLabel header(String text)
     {
         JLabel lbl = new JLabel(text, SwingConstants.CENTER);
@@ -70,9 +68,11 @@ public class LoginScreen extends JPanel
         return lbl;
     }
 
-    /* --------------------------------------------------------------
-       Helper: returns a row with a left-aligned label + field
-     -------------------------------------------------------------- */
+       /*
+       Helper: returns a row with a left-aligned label + field. Helps
+       keep all fields aligned, and accepts any JComponent so it can
+       be reused
+       */
     private JPanel createFieldPanel(String labelText, JComponent field)
     {
         // left-aligned row
@@ -106,6 +106,8 @@ public class LoginScreen extends JPanel
         parentFrame.revalidate();   // re-layout
         parentFrame.repaint();      // refresh
     }
+
+    // used to go to RegistrationScreen
     private JButton registerButton()
     {
         JButton b = new JButton("Don't have an account? Register here.");
@@ -115,6 +117,8 @@ public class LoginScreen extends JPanel
         b.addActionListener(e -> navigateToRegistration());
         return b;
     }
+
+    // Login button so once clicked it goes to homescreen
     private JButton loginButton()
     {
         JButton b = new JButton("Login");
@@ -127,8 +131,10 @@ public class LoginScreen extends JPanel
     }
     private void navigateToHome()
     {
+        // TODO: replace these with real credential checks and DB lookup
+
         parentFrame.getContentPane().removeAll();
-        parentFrame.getContentPane().add(new HomeScreen());
+       // parentFrame.getContentPane().add(new HomeScreen());
         parentFrame.revalidate();
         parentFrame.repaint();
     }

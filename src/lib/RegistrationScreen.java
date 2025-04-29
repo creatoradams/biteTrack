@@ -1,8 +1,6 @@
 package lib;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
 
 public class RegistrationScreen extends JPanel
@@ -14,9 +12,16 @@ public class RegistrationScreen extends JPanel
     private final JTextField phoneField;
     private final JPasswordField passwordField;
     private final JPasswordField confirmPasswordField;
-
     private final JFrame parentFrame;
-
+    private final JTextField ageField       = new JTextField();
+    private final JTextField weightField    = new JTextField();
+    private final JTextField heightField    = new JTextField();
+    private final JComboBox<NutritionCalculator.Gender> genderCombo =
+            new JComboBox<>(NutritionCalculator.Gender.values());
+    private final JComboBox<NutritionCalculator.ActivityLevel> activityLevelCombo =
+            new JComboBox<>(NutritionCalculator.ActivityLevel.values());
+    private final JComboBox<NutritionCalculator.Goal> goalCombo =
+            new JComboBox<>(NutritionCalculator.Goal.values());
     public RegistrationScreen(JFrame frame)
     {
         this.parentFrame = frame;
@@ -48,6 +53,15 @@ public class RegistrationScreen extends JPanel
         // Confirm Password field
         formPanel.add(createPasswordField("Confirm Password", confirmPasswordField = new JPasswordField()));
 
+        formPanel.add(createFieldPanel("Age (years)", ageField));
+        formPanel.add(createFieldPanel("Weight (lbs)", weightField));
+        formPanel.add(createFieldPanel("Height (cm)", heightField));
+
+        formPanel.add(createFieldPanel("Gender", genderCombo));
+        formPanel.add(createFieldPanel("Activity Level", activityLevelCombo));
+        formPanel.add(createFieldPanel("Goal", goalCombo));
+
+
         // Register button
         JButton registerButton = new JButton("Register");
         registerButton.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -66,17 +80,30 @@ public class RegistrationScreen extends JPanel
     }
 
     // Method to create text field with label
-    private JPanel createFieldPanel(String labelText, JTextField field)
+    private JPanel createFieldPanel(String labelText, JComponent field)
     {
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel label = new JLabel(labelText);
-        label.setFont(new Font("Arial", Font.PLAIN, 18));
-        label.setPreferredSize(new Dimension(90, 40));
 
-        field.setPreferredSize(new Dimension(300, 40));
-        field.setFont(new Font("Arial", Font.PLAIN, 18));
+        JLabel lbl = new JLabel(labelText);
+        lbl.setFont(new Font("Arial", Font.PLAIN, 18));
+        lbl.setPreferredSize(new Dimension(90, 30));   // fixed width so rows align
 
-        row.add(label);
+        // Give text components a consistent size
+        if (field instanceof JTextField txt)
+        {
+            txt.setFont(new Font("Arial", Font.PLAIN, 18));
+            txt.setPreferredSize(new Dimension(300, 40));
+        } else if (field instanceof JPasswordField pwd)
+        {
+            pwd.setFont(new Font("Arial", Font.PLAIN, 18));
+            pwd.setPreferredSize(new Dimension(300, 40));
+        } else if (field instanceof JComboBox<?> combo)
+        {
+            combo.setFont(new Font("Arial", Font.PLAIN, 18));
+            combo.setPreferredSize(new Dimension(300, 40));
+        }
+
+        row.add(lbl);
         row.add(field);
         return row;
     }
@@ -131,9 +158,26 @@ public class RegistrationScreen extends JPanel
             return;
         }
 
+        // Build the user record from form widgets
+        User newUser;
+        try
+        {
+            newUser = buildUser();
+        } catch (NumberFormatException ex)
+        {
+            showMessage("Age, weight, and height must be numeric.");
+            return;
+        }
+
+        /* ----- TODO: persist newUser to file / DB here ----- */
+
+
         // If validation passes, show success message (for demo purposes)
         JOptionPane.showMessageDialog(parentFrame, "Registration successful!");
-        // Here, in a real app, you would send the data to your backend or API.
+
+        // Navigate to the home/dashboard panel and pass the user
+        parentFrame.setContentPane(new HomeScreen(newUser));   // you'll overload HomeScreen
+        parentFrame.revalidate(); parentFrame.repaint();
     }
 
     // Show error message
@@ -156,5 +200,35 @@ public class RegistrationScreen extends JPanel
         parentFrame.getContentPane().add(new LoginScreen(parentFrame)); // You need to create LoginScreen class similarly.
         parentFrame.revalidate();
         parentFrame.repaint();
+    }
+
+    //build a user record
+    private User buildUser()
+    {
+        /**
+         * Reads the form widgets, converts them to the correct units / enums,
+         * and returns a populated User record.
+         *
+         * @throws NumberFormatException if the user typed non-numeric text
+         *                               into age, weight, or height fields.
+         */
+
+        // Gather and trim plain text values
+        String firstName = firstNameField.getText().trim();
+        String lastName  = lastNameField.getText().trim();
+        String fullName  = (firstName + " " + lastName).trim();
+
+        // Convert numeric strings to numbers
+        int age = Integer.parseInt(ageField.getText().trim());
+        double weight = Double.parseDouble(weightField.getText().trim());
+        double heightCm = Double.parseDouble(heightField.getText().trim());
+
+        // Read enum selections from combo boxes
+        NutritionCalculator.Gender gender = (NutritionCalculator.Gender) genderCombo.getSelectedItem();
+        NutritionCalculator.ActivityLevel activityLevel = (NutritionCalculator.ActivityLevel) activityLevelCombo.getSelectedItem();
+        NutritionCalculator.Goal goal = (NutritionCalculator.Goal) goalCombo.getSelectedItem();
+
+        // Build and return the immutable User record
+        return new User(fullName, age, weight, heightCm, gender, activityLevel, goal);
     }
 }

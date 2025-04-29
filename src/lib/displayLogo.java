@@ -1,34 +1,29 @@
 package lib;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import java.util.Objects;
 
 public class displayLogo extends JPanel
 {
     public displayLogo() throws IOException
     {
         // logo dimensions
-        int width = 100;
-        int height = 100;
+        int width = 200;
+        int height = 200;
 
-        // Set layout to null so we can control positioning directly
         setLayout(new BorderLayout());
 
-        // Load the image
-        ImageIcon icon = new ImageIcon("C:/JAVA/BiteTrackJava/BiteTrackJava/logo.jpg");
+        // Load and scale the logo
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/logo.jpg"), "Logo resource not found"));
         Image img = icon.getImage();
         Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
         // Create and add a JLabel to hold the image
         JLabel logo = new JLabel(new ImageIcon(scaledImg));
         add(logo, BorderLayout.NORTH);
+
+
     }
 }
 

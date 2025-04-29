@@ -1,6 +1,7 @@
 package lib;
 import javax.swing.*;
 
+
 // Main class to start the application
 public class BiteTrackApp
 {
@@ -14,6 +15,7 @@ public class BiteTrackApp
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(600, 600); // Set the window size
 
+            // display logo
             try
             {
                 frame.setContentPane(new displayLogo()); // show logo
