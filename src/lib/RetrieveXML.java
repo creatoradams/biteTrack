@@ -76,42 +76,55 @@ public class RetrieveXML {
 
     // Load a list of Users from an XML file
     // this loads our overall user list
-    public static List<User> loadUserListFromXML(String filePath) {
-        List<User> users = new ArrayList<>();
+    public static ArrayList<User> loadUserListFromXML(String filename) {
+        ArrayList<User> userList = new ArrayList<>();
+
         try {
-            File xmlFile = new File(filePath);
-            if (!xmlFile.exists()) {
-                System.out.println("❌ File not found: " + filePath);
-                return users;
-            }
+            File file = new File(filename);
+            if (!file.exists()) return userList;
+
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(xmlFile);
-            doc.getDocumentElement().normalize();
+            Document doc = builder.parse(file);
 
-            NodeList nl = doc.getElementsByTagName("User");
-            for (int i = 0; i < nl.getLength(); i++) {
-                Element ux = (Element) nl.item(i);
-                User u = new User(
-                        getTagValue(ux, "FirstName"),
-                        getTagValue(ux, "LastName"),
-                        getTagValue(ux, "Username"),
-                        getTagValue(ux, "Phone"),
-                        getTagValue(ux, "Password"),              // debug only!
-                        Integer.parseInt(getTagValue(ux, "Age")),
-                        Double.parseDouble(getTagValue(ux, "Weight")),
-                        Double.parseDouble(getTagValue(ux, "HeightCm")),
-                        NutritionCalculator.Gender.valueOf(getTagValue(ux, "Gender")),
-                        NutritionCalculator.ActivityLevel.valueOf(getTagValue(ux, "ActivityLevel")),
-                        NutritionCalculator.Goal.valueOf(getTagValue(ux, "Goal"))
+            NodeList userNodes = doc.getElementsByTagName("user");
+
+            for (int i = 0; i < userNodes.getLength(); i++) {
+                Element userElement = (Element) userNodes.item(i);
+
+                String firstName = userElement.getElementsByTagName("firstName").item(0).getTextContent();
+                String lastName = userElement.getElementsByTagName("lastName").item(0).getTextContent();
+                String username = userElement.getElementsByTagName("username").item(0).getTextContent();
+                String phone = userElement.getElementsByTagName("phone").item(0).getTextContent();
+                String password = userElement.getElementsByTagName("password").item(0).getTextContent();
+
+                int age = Integer.parseInt(userElement.getElementsByTagName("age").item(0).getTextContent());
+                double weight = Double.parseDouble(userElement.getElementsByTagName("weight").item(0).getTextContent());
+                double heightCm = Double.parseDouble(userElement.getElementsByTagName("heightCm").item(0).getTextContent());
+
+                NutritionCalculator.Gender gender = NutritionCalculator.Gender.valueOf(
+                        userElement.getElementsByTagName("gender").item(0).getTextContent()
                 );
-                users.add(u);
+                NutritionCalculator.ActivityLevel activityLevel = NutritionCalculator.ActivityLevel.valueOf(
+                        userElement.getElementsByTagName("activityLevel").item(0).getTextContent()
+                );
+                NutritionCalculator.Goal goal = NutritionCalculator.Goal.valueOf(
+                        userElement.getElementsByTagName("goal").item(0).getTextContent()
+                );
+
+                User user = new User(
+                        firstName, lastName, username, phone, password,
+                        age, weight, heightCm, gender, activityLevel, goal
+                );
+
+                userList.add(user);
             }
-            System.out.println("✅ Loaded " + users.size() + " user(s) from " + filePath);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return users;
+
+        return userList;
     }
 
 
@@ -184,6 +197,7 @@ public class RetrieveXML {
             System.out.println("  FatsGrams: " + macros.fatsGrams());
         }
     }
+
 
 
 

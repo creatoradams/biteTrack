@@ -232,9 +232,7 @@ public class RegistrationScreen extends JPanel
         NutritionCalculator.Gender gender = (NutritionCalculator.Gender) genderCombo.getSelectedItem();
         NutritionCalculator.ActivityLevel activityLevel = (NutritionCalculator.ActivityLevel) activityLevelCombo.getSelectedItem();
         NutritionCalculator.Goal goal = (NutritionCalculator.Goal) goalCombo.getSelectedItem();
-
-        // Build and return the immutable User record
-        return new User(
+        User user = new User(
                 firstName,
                 lastName,
                 username,
@@ -247,5 +245,8 @@ public class RegistrationScreen extends JPanel
                 activityLevel,
                 goal
         );
+        // Build and return the immutable User record
+        Database.saveUserToXML(user);
+        return user;
     }
 }

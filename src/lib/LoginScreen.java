@@ -1,6 +1,7 @@
 package lib;
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 /**
  *  LoginScreen – a JPanel that shows the email / password form
@@ -134,10 +135,35 @@ public class LoginScreen extends JPanel
     }
     private void navigateToHome()
     {
-        // TODO: replace these with real credential checks and DB lookup
+        /*
+        Ethan:
+        I ran into issues when I realized I made the class based on my test cases where I manually inputed the user filepath
+        The flaw is it doesnt work dynamically, so instead im just using users.xml
+        When navigating to the home screen, pulls the active user from storage
 
-        parentFrame.getContentPane().removeAll();
-        parentFrame.revalidate();
-        parentFrame.repaint();
+
+         */
+        // retrieves users in form of list to check sign in
+        List<User> userList = RetrieveXML.loadUserListFromXML("users.xml");
+        String username = usernameField.getText();
+        String password = new String(passwordField.getPassword());
+
+        // checks user login to user list and verifies passwords match
+        boolean found = false;
+        for (User u : userList) {
+            if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+                found = true;
+                break;
+            }
+        }
+
+        if (found) {
+            parentFrame.getContentPane().removeAll();
+            parentFrame.revalidate();
+            parentFrame.repaint();
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid login credentials.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+        }
     }
+
 }

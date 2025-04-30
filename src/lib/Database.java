@@ -35,7 +35,10 @@ import java.util.List;
 public class Database {
 // XML document builder for saving a user list to an XML document for active storage
 public static void saveUsersToXML(List<User> users) {
-    // saves users to a central aggregate list, and retrieval will be based on the email
+    /* saves users to a central aggregate list, and retrieval will be based on the email
+    Degraded.
+    I thought I could use a userlist and individual interchangable, turns out you cant.
+     */
     String filePath = "users.xml";
     try {
         // black magic of document building
@@ -74,6 +77,52 @@ public static void saveUsersToXML(List<User> users) {
         e.printStackTrace();
     }
 }
+    public static void saveUserToXML(User user) {
+        /* saves users to a central aggregate list, and retrieval will be based on the email
+        Updated version of saveUsersToXML
+        This works with a single user, used for implementing user file saves when registering
+        I thought I could use a list interchangably, or create a list with a single object for saving users.
+        Turns out that makes things much harder
+        so now we save a single user
+        Kept old one as export futureproofing and artifact
+         */
+
+        String filePath = "users.xml";
+        try {
+            // black magic of document building
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.newDocument();
+
+            Element root = doc.createElement("Users");
+            doc.appendChild(root);
+            // saves user values for each value
+            // processes each individual user and saves them to the aggregate file
+                Element u = doc.createElement("User");
+                root.appendChild(u);
+
+                u.appendChild(createElement(doc, "FirstName", user.firstName()));
+                u.appendChild(createElement(doc, "LastName", user.lastName()));
+                u.appendChild(createElement(doc, "Username", user.username()));
+                u.appendChild(createElement(doc, "Phone", user.phone()));
+                // I would NOT do this if it werent just a prototype, you will not catch me saving passwords plaintext
+                // in reality this would be a SQLite instance with stored hashes
+                u.appendChild(createElement(doc, "Password", user.password()));
+
+                u.appendChild(createElement(doc, "Age", String.valueOf(user.age())));
+                u.appendChild(createElement(doc, "Weight", String.valueOf(user.weight())));
+                u.appendChild(createElement(doc, "HeightCm", String.valueOf(user.heightCm())));
+                u.appendChild(createElement(doc, "Gender", user.gender().name()));
+                u.appendChild(createElement(doc, "ActivityLevel", user.activityLevel().name()));
+                u.appendChild(createElement(doc, "Goal", user.goal().name()));
+
+            saveDocumentToFile(doc, filePath);
+            System.out.println("✅ Users saved to " + filePath);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 // Function for saving our nutrition calculator record to an XML file
 public static void saveCalcMacrosToXML(
@@ -129,6 +178,7 @@ public static void saveCalcMacrosToXML(
 
 
 
+
     // creating elements for text nodes in XML
 // this was a pain, mostly because its harder to create xml files from data than I expected.
 // thanks Geeks for Geeks
@@ -164,8 +214,8 @@ public static void saveCalcMacrosToXML(
                         NutritionCalculator.ActivityLevel.MODERATE,
                         NutritionCalculator.Goal.BULK)
         );
+        // reworked the user save to only save one user, unsure if persistent and allows multiple or overwrites
 
-        Database.saveUsersToXML(users);
 
         // saves the nutrition calculator recommendations
         // needed addition of the active user in the session to save the values
@@ -182,6 +232,10 @@ public static void saveCalcMacrosToXML(
                 NutritionCalculator.Gender.MALE,
                 NutritionCalculator.ActivityLevel.MODERATE,
                 NutritionCalculator.Goal.BULK);
+
+        // reworked the user save to only save one user, unsure if persistent and allows multiple or overwrites
+
+        Database.saveUserToXML(bob);
 
         // since we need the nutrition calculator to take a calorie count as an argument, have a placeholder
         double totalCalories = 1800.0;

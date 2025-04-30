@@ -7,6 +7,8 @@ public class BiteTrackApp
 {
     public static void main(String[] args)
     {
+        // should have made a main user, but the dependency is on a nutrition calculator instance. 
+        //User testUser = new User("test", "test", "testUser", "5015550005", "tester", 25, 170, 50)
         // Initialize the main frame of the app
         SwingUtilities.invokeLater(() ->
         {
