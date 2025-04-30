@@ -72,11 +72,11 @@ public class LoginScreen extends JPanel
         return lbl;
     }
 
-       /*
-       Helper: returns a row with a left-aligned label + field. Helps
-       keep all fields aligned, and accepts any JComponent so it can
-       be reused
-       */
+    /*
+    Helper: returns a row with a left-aligned label + field. Helps
+    keep all fields aligned, and accepts any JComponent so it can
+    be reused
+    */
     private JPanel createFieldPanel(String labelText, JComponent field)
     {
         // left-aligned row
@@ -150,18 +150,22 @@ public class LoginScreen extends JPanel
 
         // checks user login to user list and verifies passwords match
         boolean found = false;
-        for (User u : userList) {
-            if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+        for (User u : userList)
+        {
+            if (u.getUsername().equals(username) && u.getPassword().equals(password))
+            {
                 found = true;
                 break;
             }
         }
 
-        if (found) {
+        if (found)
+        {
             parentFrame.getContentPane().removeAll();
             parentFrame.revalidate();
             parentFrame.repaint();
-        } else {
+        } else
+        {
             JOptionPane.showMessageDialog(this, "Invalid login credentials.", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
     }
