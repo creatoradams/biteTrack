@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class RegistrationScreen extends JPanel {
+public class RegistrationScreen extends JPanel
+{
     private final JTextField firstNameField;
     private final JTextField lastNameField;
     private final JTextField userNameField;
@@ -23,7 +24,8 @@ public class RegistrationScreen extends JPanel {
     private final JComboBox<NutritionCalculator.Goal> goalCombo =
             new JComboBox<>(NutritionCalculator.Goal.values());
 
-    public RegistrationScreen(JFrame frame) {
+    public RegistrationScreen(JFrame frame)
+    {
         this.parentFrame = frame;
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 20));
@@ -42,7 +44,7 @@ public class RegistrationScreen extends JPanel {
 
         formPanel.add(createFieldPanel("Age", ageField));
         formPanel.add(createFieldPanel("Weight", weightField));
-        formPanel.add(createFieldPanel("Height (cm)", heightField));
+        formPanel.add(createFieldPanel("Height(in)", heightField));
         formPanel.add(createFieldPanel("Gender", genderCombo));
         formPanel.add(createFieldPanel("Activity", activityLevelCombo));
         formPanel.add(createFieldPanel("Goal", goalCombo));
@@ -61,7 +63,8 @@ public class RegistrationScreen extends JPanel {
         add(formPanel, BorderLayout.CENTER);
     }
 
-    private JPanel createFieldPanel(String labelText, JComponent field) {
+    private JPanel createFieldPanel(String labelText, JComponent field)
+    {
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel lbl = new JLabel(labelText);
         lbl.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -74,7 +77,8 @@ public class RegistrationScreen extends JPanel {
         return row;
     }
 
-    private JPanel createPasswordField(String labelText, JPasswordField field) {
+    private JPanel createPasswordField(String labelText, JPasswordField field)
+    {
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel label = new JLabel(labelText);
         label.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -87,36 +91,45 @@ public class RegistrationScreen extends JPanel {
         return row;
     }
 
-    private void _register() {
-        if (firstNameField.getText().isEmpty()) {
+    private void _register()
+    {
+        if (firstNameField.getText().isEmpty())
+        {
             showMessage("Please enter your first name.");
             return;
         }
-        if (lastNameField.getText().isEmpty()) {
+        if (lastNameField.getText().isEmpty())
+        {
             showMessage("Please enter your last name.");
             return;
         }
-        if (!isValidUsername(userNameField.getText())) {
+        if (!isValidUsername(userNameField.getText()))
+        {
             showMessage("Please enter a valid username.");
             return;
         }
-        if (phoneField.getText().isEmpty()) {
+        if (phoneField.getText().isEmpty())
+        {
             showMessage("Please enter your phone number.");
             return;
         }
-        if (passwordField.getPassword().length < 6) {
+        if (passwordField.getPassword().length < 6)
+        {
             showMessage("Password must be at least 6 characters.");
             return;
         }
-        if (!String.valueOf(confirmPasswordField.getPassword()).equals(String.valueOf(passwordField.getPassword()))) {
+        if (!String.valueOf(confirmPasswordField.getPassword()).equals(String.valueOf(passwordField.getPassword())))
+        {
             showMessage("Passwords do not match.");
             return;
         }
 
         User newUser;
-        try {
+        try
+        {
             newUser = buildUser();
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex)
+        {
             showMessage("Age, weight, and height must be numeric.");
             return;
         }
@@ -134,7 +147,8 @@ public class RegistrationScreen extends JPanel {
         parentFrame.repaint();
     }
 
-    private void showMessage(String message) {
+    private void showMessage(String message)
+    {
         JOptionPane.showMessageDialog(parentFrame, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
@@ -142,14 +156,16 @@ public class RegistrationScreen extends JPanel {
         return username.matches("^[A-Za-z0-9_-]{3,20}$");
     }
 
-    private void navigateToLogin() {
+    private void navigateToLogin()
+    {
         parentFrame.getContentPane().removeAll();
         parentFrame.getContentPane().add(new LoginScreen(parentFrame));
         parentFrame.revalidate();
         parentFrame.repaint();
     }
 
-    private User buildUser() {
+    private User buildUser()
+    {
         String firstName = firstNameField.getText().trim();
         String lastName = lastNameField.getText().trim();
         String username = userNameField.getText().trim();
