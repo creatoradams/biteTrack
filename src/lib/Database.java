@@ -11,6 +11,10 @@ from storage into memory, we would instead be able to pull what exactly we neede
 this is why I do not have any form of batch storage or retrieval, as this is just a working prototype
 
 Side Notes: maybe I should have made it autocreate a filepath, but I dont know how to make it automatically set and managed rn
+
+Another note: working in Cybersecurity, I would NEVER save passwords plaintext,
+in reality I would create a separate database that would hash them and use that to move credentials
+This is a working prototype
 */
 package lib;
 // WHAT IN THE DEPENDENCIES
@@ -49,9 +53,11 @@ public static void saveUsersToXML(List<User> users) {
 
             u.appendChild(createElement(doc, "FirstName", user.firstName()));
             u.appendChild(createElement(doc, "LastName", user.lastName()));
-            u.appendChild(createElement(doc, "Email", user.email()));
+            u.appendChild(createElement(doc, "Username", user.username()));
             u.appendChild(createElement(doc, "Phone", user.phone()));
-            u.appendChild(createElement(doc, "Password", user.password()));   // remove in production!
+            // I would NOT do this if it werent just a prototype, you will not catch me saving passwords plaintext
+            // in reality this would be a SQLite instance with stored hashes
+            u.appendChild(createElement(doc, "Password", user.password()));
 
             u.appendChild(createElement(doc, "Age", String.valueOf(user.age())));
             u.appendChild(createElement(doc, "Weight", String.valueOf(user.weight())));
@@ -91,7 +97,7 @@ public static void saveCalcMacrosToXML(
         root.appendChild(u);
         u.appendChild(createElement(doc, "FirstName", user.firstName()));
         u.appendChild(createElement(doc, "LastName", user.lastName()));
-        u.appendChild(createElement(doc, "Email", user.email()));
+        u.appendChild(createElement(doc, "Username", user.username()));
 
         u.appendChild(createElement(doc, "Age", String.valueOf(user.age())));
         u.appendChild(createElement(doc, "Weight", String.valueOf(user.weight())));
@@ -146,13 +152,13 @@ public static void saveCalcMacrosToXML(
         // test userList, list of overall users on the app. very basic
         // tests pushing multiple users. Currently set this way so we can append the file list with additional users
         List<User> users = List.of(
-                new User("Alice", "Microsoft", "alice@onmicrosoft.com", "5015555050", "123456",
+                new User("Alice", "Microsoft", "alicemicrosoft", "5015555050", "123456",
                         30, 120, 160.5,
                         NutritionCalculator.Gender.FEMALE,
                         NutritionCalculator.ActivityLevel.LIGHT,
                         NutritionCalculator.Goal.CUT),
 
-                new User("Bob", "Microsoft", "bob@onmicrosoft.com", "5015555050", "123456",
+                new User("Bob", "Microsoft", "bobmicrosoft", "5015555050", "123456",
                         22, 185, 175.5,
                         NutritionCalculator.Gender.MALE,
                         NutritionCalculator.ActivityLevel.MODERATE,
@@ -166,12 +172,12 @@ public static void saveCalcMacrosToXML(
         // currently is free floating, we need to modify the nutrition calculator to account for current user
 
         // hello alice and bob from microsoft
-        User alice = new User("Alice", "Microsoft", "alice@onmicrosoft.com", "5015555050", "123456",
+        User alice = new User("Alice", "Microsoft", "alicemicrosoft", "5015555050", "123456",
                 30, 120, 160.5,
                 NutritionCalculator.Gender.FEMALE,
                 NutritionCalculator.ActivityLevel.LIGHT,
                 NutritionCalculator.Goal.CUT);
-        User bob = new User("Bob", "Microsoft", "bob@onmicrosoft.com", "5015555050", "123456",
+        User bob = new User("Bob", "Microsoft", "bobmicrosoft", "5015555050", "123456",
                 22, 185, 175.5,
                 NutritionCalculator.Gender.MALE,
                 NutritionCalculator.ActivityLevel.MODERATE,

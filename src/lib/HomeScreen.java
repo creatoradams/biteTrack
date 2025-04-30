@@ -15,7 +15,7 @@ class HomeScreen extends JPanel
         setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
         // Create a label to greet user
-        String greetText = (user == null) ? "Welcome to BiteTrack!" : "Nice to see you, " + user.name() + "!";
+        String greetText = (user == null) ? "Welcome to BiteTrack!" : "Nice to see you, " + user.firstName() + "!";
         JLabel greet = new JLabel(greetText, SwingConstants.CENTER);
         greet.setFont(new Font("Arial", Font.BOLD, 22));
 

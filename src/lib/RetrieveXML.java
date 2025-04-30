@@ -39,7 +39,7 @@ public class RetrieveXML {
             User user = new User(
                     getTagValue(ux, "FirstName"),
                     getTagValue(ux, "LastName"),
-                    getTagValue(ux, "Email"),
+                    getTagValue(ux, "Username"),
                     getTagValue(ux, "Phone"),
                     getTagValue(ux, "Password"),          // debug only!
                     Integer.parseInt(getTagValue(ux, "Age")),
@@ -95,7 +95,7 @@ public class RetrieveXML {
                 User u = new User(
                         getTagValue(ux, "FirstName"),
                         getTagValue(ux, "LastName"),
-                        getTagValue(ux, "Email"),
+                        getTagValue(ux, "Username"),
                         getTagValue(ux, "Phone"),
                         getTagValue(ux, "Password"),              // debug only!
                         Integer.parseInt(getTagValue(ux, "Age")),
@@ -123,7 +123,7 @@ public class RetrieveXML {
             System.out.println("\n👤 User:");
             System.out.println("  First Name: " + user.firstName());
             System.out.println("  Last Name: " + user.lastName());
-            System.out.println("  Email: " + user.email());
+            System.out.println("  Email: " + user.getUsername());
             System.out.println("  Phone: " + user.phone());
             System.out.println("  Age: " + user.age());
             System.out.println("  WeightKg: " + user.weight());
@@ -165,7 +165,7 @@ public class RetrieveXML {
             System.out.println("\n👤 User:");
             System.out.println("  First Name: " + user.firstName());
             System.out.println("  Last Name: " + user.lastName());
-            System.out.println("  Email: " + user.email());
+            System.out.println("  Email: " + user.getUsername());
             System.out.println("  Phone: " + user.phone());
             System.out.println("  Age: " + user.age());
             System.out.println("  WeightKg: " + user.weight());

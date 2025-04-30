@@ -220,6 +220,8 @@ public class RegistrationScreen extends JPanel
         String firstName = firstNameField.getText().trim();
         String lastName  = lastNameField.getText().trim();
         String username = userNameField.getText().trim();
+        String phone = phoneField.getText().trim();
+        String password = String.valueOf(passwordField.getPassword());
 
         // Convert numeric strings to numbers
         int age = Integer.parseInt(ageField.getText().trim());
@@ -233,7 +235,11 @@ public class RegistrationScreen extends JPanel
 
         // Build and return the immutable User record
         return new User(
+                firstName,
+                lastName,
                 username,
+                phone,
+                password,
                 age,
                 weight,
                 heightCm,
