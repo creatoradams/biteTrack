@@ -10,7 +10,8 @@ import java.util.List;
  * LogMealDialog provides a modal window for users to enter
  * details about a meal and save it to their history.
  */
-public class LogMealDialog extends JDialog {
+public class LogMealDialog extends JDialog
+{
     // Input fields for meal data
     private final JTextField mealNameField = new JTextField();
     private final JTextField caloriesField = new JTextField();
@@ -31,7 +32,8 @@ public class LogMealDialog extends JDialog {
     /**
      * Constructor sets up the form and dialog layout.
      */
-    public LogMealDialog(JFrame parent, User user, List<MealEntry> mealList) {
+    public LogMealDialog(JFrame parent, User user, List<MealEntry> mealList)
+    {
         super(parent, "Log a Meal", true); // modal dialog
         this.user = user;
         this.mealList = mealList;
@@ -74,7 +76,8 @@ public class LogMealDialog extends JDialog {
     /**
      * Utility method to create a row with a label and a text field.
      */
-    private JPanel labeledField(String labelText, JTextField field) {
+    private JPanel labeledField(String labelText, JTextField field)
+    {
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
         row.setBackground(Color.WHITE);
 
@@ -94,8 +97,10 @@ public class LogMealDialog extends JDialog {
     /**
      * Saves the meal to the user's meal list and XML file.
      */
-    private void saveMeal() {
-        try {
+    private void saveMeal()
+    {
+        try
+        {
             // Get and validate input values
             String name = mealNameField.getText().trim();
             int calories = Integer.parseInt(caloriesField.getText().trim());
@@ -103,13 +108,14 @@ public class LogMealDialog extends JDialog {
             int carbs = Integer.parseInt(carbsField.getText().trim());
             int fats = Integer.parseInt(fatsField.getText().trim());
 
-            if (name.isEmpty()) {
+            if (name.isEmpty())
+            {
                 JOptionPane.showMessageDialog(this, "Please enter a meal name.");
                 return;
             }
 
-            // Get today's date in yyyy-MM-dd format
-            String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            // Get today's date in MM-dd-yyyy format
+            String date = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
 
             // Create new MealEntry and save it
             MealEntry entry = new MealEntry(date, name, calories, protein, carbs, fats);
