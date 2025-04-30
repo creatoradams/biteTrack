@@ -1,7 +1,14 @@
 package lib;
+/*
 public record User(String name, int age, double weight, double heightCm, NutritionCalculator.Gender gender,
                    NutritionCalculator.ActivityLevel activityLevel, NutritionCalculator.Goal goal)
 {
+    */
+    public record User(String firstName, String lastName, String email, String phone, String password,
+                       int age, double weight, double heightCm, NutritionCalculator.Gender gender,
+                       NutritionCalculator.ActivityLevel activityLevel, NutritionCalculator.Goal goal)
+
+    {
 
     // send to
     public double calculateBMR() {
@@ -17,12 +24,25 @@ public record User(String name, int age, double weight, double heightCm, Nutriti
     public String toString()
     {
         return "👤 User Profile\n" +
-                "Name: " + name + "\n" +
+                "First Name: " + firstName + "\n" +
+                "Last Name: " + lastName + "\n" +
+                "Email: " + email + "\n" +
+                "Phone: " + phone + "\n" +
                 "Age: " + age + " years\n" +
                 "Weight: " + String.format("%.2f", weight) + " lbs\n" +
                 "Height: " + String.format("%.2f", heightCm) + " cm\n" +
                 "Gender: " + gender + "\n" +
                 "Activity Level: " + activityLevel + "\n" +
                 "Goal: " + goal;
+    }
+    // this is for debugging to make sure the password is stored, PLEASE DELETE WHEN DONE
+    public String getPassword() {
+        return password;
+    }
+    public String getFullNameNoSpace() {
+        return firstName + lastName;
+    }
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 }
