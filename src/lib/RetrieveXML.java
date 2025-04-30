@@ -22,11 +22,14 @@ public class RetrieveXML {
     // Load a full user + macro calculation from an XML file
     // this is what retrieves our macro calculator and goal for the end user
     // since a macro goal is user defined, it makes sense to have it assigned to a user
-    public static Result loadUserMacrosFromXML(String filePath) {
+    public static Result loadUserMacrosFromXML(String filePath)
+    {
         Result result = null;
-        try {
+        try
+        {
             File xmlFile = new File(filePath);
-            if (!xmlFile.exists()) {
+            if (!xmlFile.exists())
+            {
                 System.out.println("❌ File not found: " + filePath);
                 return null;
             }
@@ -44,7 +47,7 @@ public class RetrieveXML {
                     getTagValue(ux, "Password"),          // debug only!
                     Integer.parseInt(getTagValue(ux, "Age")),
                     Double.parseDouble(getTagValue(ux, "Weight")),
-                    Double.parseDouble(getTagValue(ux, "HeightCm")),
+                    Double.parseDouble(getTagValue(ux, "Height(in)")),
                     NutritionCalculator.Gender.valueOf(getTagValue(ux, "Gender")),
                     NutritionCalculator.ActivityLevel.valueOf(getTagValue(ux, "ActivityLevel")),
                     NutritionCalculator.Goal.valueOf(getTagValue(ux, "Goal"))
@@ -67,7 +70,8 @@ public class RetrieveXML {
             result = new Result(user, totalCalories, goal, macros);
             System.out.println("✅ Data loaded successfully from " + filePath);
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
         return result;
@@ -76,10 +80,11 @@ public class RetrieveXML {
 
     // Load a list of Users from an XML file
     // this loads our overall user list
-    public static ArrayList<User> loadUserListFromXML(String filename) {
+    public static ArrayList<User> loadUserListFromXML(String filename)
+    {
         ArrayList<User> userList = new ArrayList<>();
-
-        try {
+        try
+        {
             File file = new File(filename);
             if (!file.exists()) return userList;
 
@@ -89,7 +94,8 @@ public class RetrieveXML {
 
             NodeList userNodes = doc.getElementsByTagName("user");
 
-            for (int i = 0; i < userNodes.getLength(); i++) {
+            for (int i = 0; i < userNodes.getLength(); i++)
+            {
                 Element userElement = (Element) userNodes.item(i);
 
                 String firstName = userElement.getElementsByTagName("firstName").item(0).getTextContent();
@@ -100,7 +106,7 @@ public class RetrieveXML {
 
                 int age = Integer.parseInt(userElement.getElementsByTagName("age").item(0).getTextContent());
                 double weight = Double.parseDouble(userElement.getElementsByTagName("weight").item(0).getTextContent());
-                double heightCm = Double.parseDouble(userElement.getElementsByTagName("heightCm").item(0).getTextContent());
+                double height = Double.parseDouble(userElement.getElementsByTagName("height(in)").item(0).getTextContent());
 
                 NutritionCalculator.Gender gender = NutritionCalculator.Gender.valueOf(
                         userElement.getElementsByTagName("gender").item(0).getTextContent()
@@ -114,13 +120,14 @@ public class RetrieveXML {
 
                 User user = new User(
                         firstName, lastName, username, phone, password,
-                        age, weight, heightCm, gender, activityLevel, goal
+                        age, weight, height, gender, activityLevel, goal
                 );
 
                 userList.add(user);
             }
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
 
@@ -131,16 +138,18 @@ public class RetrieveXML {
     // Debug print method for a list of users
     // returns all user data and goal values
     // in reality this would be attached to an encrypted database for user privacy
-    public static void printUserList(List<User> users) {
-        for (User user : users) {
+    public static void printUserList(List<User> users)
+    {
+        for (User user : users)
+        {
             System.out.println("\n👤 User:");
             System.out.println("  First Name: " + user.firstName());
             System.out.println("  Last Name: " + user.lastName());
             System.out.println("  Email: " + user.getUsername());
             System.out.println("  Phone: " + user.phone());
             System.out.println("  Age: " + user.age());
-            System.out.println("  WeightKg: " + user.weight());
-            System.out.println("  HeightCm: " + user.heightCm());
+            System.out.println("  Weight: " + user.weight());
+            System.out.println("  Height: " + user.height());
             System.out.println("  Gender: " + user.gender());
             System.out.println("  ActivityLevel: " + user.activityLevel());
             System.out.println("  Goal: " + user.goal());
@@ -149,9 +158,11 @@ public class RetrieveXML {
 
     // Helper to extract tag text content
     // something something this wouldnt work without this according to geeksforgeeks
-    private static String getTagValue(Element element, String tagName) {
+    private static String getTagValue(Element element, String tagName)
+    {
         NodeList list = element.getElementsByTagName(tagName);
-        if (list.getLength() > 0) {
+        if (list.getLength() > 0)
+        {
             return list.item(0).getTextContent();
         } else {
             return "N/A";
@@ -160,13 +171,15 @@ public class RetrieveXML {
 
     // Result class to hold one User + calculation + macros
     // this is essentially loading our saved values to memory for the application
-    public static class Result {
+    public static class Result
+    {
         public User user;
         public double totalCalories;
         public NutritionCalculator.Goal goal;
         public NutritionCalculator.Macronutrients macros;
 
-        public Result(User user, double totalCalories, NutritionCalculator.Goal goal, NutritionCalculator.Macronutrients macros) {
+        public Result(User user, double totalCalories, NutritionCalculator.Goal goal, NutritionCalculator.Macronutrients macros)
+        {
             this.user = user;
             this.totalCalories = totalCalories;
             this.goal = goal;
@@ -174,15 +187,16 @@ public class RetrieveXML {
         }
 
         // Debug print for result
-        public void printToConsole() {
+        public void printToConsole()
+        {
             System.out.println("\n👤 User:");
             System.out.println("  First Name: " + user.firstName());
             System.out.println("  Last Name: " + user.lastName());
             System.out.println("  Email: " + user.getUsername());
             System.out.println("  Phone: " + user.phone());
             System.out.println("  Age: " + user.age());
-            System.out.println("  WeightKg: " + user.weight());
-            System.out.println("  HeightCm: " + user.heightCm());
+            System.out.println("  Weight: " + user.weight());
+            System.out.println("  Height: " + user.height());
             System.out.println("  Gender: " + user.gender());
             System.out.println("  ActivityLevel: " + user.activityLevel());
             System.out.println("  Goal: " + user.goal());
@@ -198,10 +212,8 @@ public class RetrieveXML {
         }
     }
 
-
-
-
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         // test retrieval of stored files
         // demonstrates that it works, will use a different method to retrieve from inside the app
         // retrieve our XML data
@@ -212,7 +224,8 @@ public class RetrieveXML {
             String filePath = scanner.nextLine();
             RetrieveXML.Result result = RetrieveXML.loadUserMacrosFromXML(filePath);
 
-            if (result != null) {
+            if (result != null)
+            {
                 result.printToConsole();
             }
             // retrieve our stored app userlist, only good for sign on systems as we probably wont be needing to retrieve a full user list
@@ -224,7 +237,8 @@ public class RetrieveXML {
 
 
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             System.out.println("❌ Error: " + e.getMessage());
         }
     }
