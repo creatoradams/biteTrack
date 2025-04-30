@@ -1,9 +1,4 @@
 package lib;
-/*
-public record User(String name, int age, double weight, double heightCm, NutritionCalculator.Gender gender,
-                   NutritionCalculator.ActivityLevel activityLevel, NutritionCalculator.Goal goal)
-{
-    */
     public record User(String firstName, String lastName, String username, String phone, String password,
                        int age, double weight, double heightCm, NutritionCalculator.Gender gender,
                        NutritionCalculator.ActivityLevel activityLevel, NutritionCalculator.Goal goal)
@@ -35,10 +30,12 @@ public record User(String name, int age, double weight, double heightCm, Nutriti
                 "Activity Level: " + activityLevel + "\n" +
                 "Goal: " + goal;
     }
-    // this is for debugging to make sure the password is stored, PLEASE DELETE WHEN DONE
-    public String getPassword() {
-        return password;
-    }
+
+    /*
+    Ethan's implementations
+    Added here to assist the frontend
+    also allows me to add additional values for file storage pointing
+     */
     public String getFullNameNoSpace() {
         return firstName + lastName;
     }
@@ -47,5 +44,9 @@ public record User(String name, int age, double weight, double heightCm, Nutriti
     }
     public String getUsername() {
         return username;
+    }
+    // I would NEVER do this, however since there is not password hashing implemented there is no option for login
+    public String getPassword() {
+        return password;
     }
 }
