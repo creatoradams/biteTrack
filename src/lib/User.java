@@ -1,13 +1,14 @@
 package lib;
     public record User(String firstName, String lastName, String username, String phone, String password,
-                       int age, double weight, double heightCm, NutritionCalculator.Gender gender,
+                       int age, double weight, double height, NutritionCalculator.Gender gender,
                        NutritionCalculator.ActivityLevel activityLevel, NutritionCalculator.Goal goal)
 
     {
 
     // send to
-    public double calculateBMR() {
-        return NutritionCalculator.calculateBMR(weight, heightCm, age, gender);
+    public double calculateBMR() 
+    {
+        return NutritionCalculator.calculateBMR(weight, height, age, gender);
     }
     public double calculateTDEE() {
         return NutritionCalculator.calculateTDEE(calculateBMR(), activityLevel);
@@ -25,7 +26,7 @@ package lib;
                 "Phone: " + phone + "\n" +
                 "Age: " + age + " years\n" +
                 "Weight: " + String.format("%.2f", weight) + " lbs\n" +
-                "Height: " + String.format("%.2f", heightCm) + " cm\n" +
+                "Height: " + String.format("%.2f", height) + " cm\n" +
                 "Gender: " + gender + "\n" +
                 "Activity Level: " + activityLevel + "\n" +
                 "Goal: " + goal;
