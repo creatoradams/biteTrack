@@ -32,9 +32,11 @@ import java.io.File;
 import java.util.List;
 
 // still need to implement a macros record, but should be easy since its already inside the Nutrition calculator
-public class Database {
+public class Database 
+{
 // XML document builder for saving a user list to an XML document for active storage
-public static void saveUsersToXML(List<User> users) {
+public static void saveUsersToXML(List<User> users) 
+{
     /* saves users to a central aggregate list, and retrieval will be based on the email
     Degraded.
     I thought I could use a userlist and individual interchangable, turns out you cant.
@@ -64,7 +66,7 @@ public static void saveUsersToXML(List<User> users) {
 
             u.appendChild(createElement(doc, "Age", String.valueOf(user.age())));
             u.appendChild(createElement(doc, "Weight", String.valueOf(user.weight())));
-            u.appendChild(createElement(doc, "HeightCm", String.valueOf(user.heightCm())));
+            u.appendChild(createElement(doc, "HeightCm", String.valueOf(user.height())));
             u.appendChild(createElement(doc, "Gender", user.gender().name()));
             u.appendChild(createElement(doc, "ActivityLevel", user.activityLevel().name()));
             u.appendChild(createElement(doc, "Goal", user.goal().name()));
@@ -73,11 +75,13 @@ public static void saveUsersToXML(List<User> users) {
         saveDocumentToFile(doc, filePath);
         System.out.println("✅ Users saved to " + filePath);
 
-    } catch (Exception e) {
+    } catch (Exception e) 
+    {
         e.printStackTrace();
     }
 }
-    public static void saveUserToXML(User user) {
+    public static void saveUserToXML(User user) 
+    {
         /* saves users to a central aggregate list, and retrieval will be based on the email
         Updated version of saveUsersToXML
         This works with a single user, used for implementing user file saves when registering
@@ -88,7 +92,8 @@ public static void saveUsersToXML(List<User> users) {
          */
 
         String filePath = "users.xml";
-        try {
+        try 
+        {
             // black magic of document building
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -111,7 +116,7 @@ public static void saveUsersToXML(List<User> users) {
 
                 u.appendChild(createElement(doc, "Age", String.valueOf(user.age())));
                 u.appendChild(createElement(doc, "Weight", String.valueOf(user.weight())));
-                u.appendChild(createElement(doc, "HeightCm", String.valueOf(user.heightCm())));
+                u.appendChild(createElement(doc, "HeightCm", String.valueOf(user.height())));
                 u.appendChild(createElement(doc, "Gender", user.gender().name()));
                 u.appendChild(createElement(doc, "ActivityLevel", user.activityLevel().name()));
                 u.appendChild(createElement(doc, "Goal", user.goal().name()));
@@ -119,7 +124,8 @@ public static void saveUsersToXML(List<User> users) {
             saveDocumentToFile(doc, filePath);
             System.out.println("✅ Users saved to " + filePath);
 
-        } catch (Exception e) {
+        } catch (Exception e) 
+        {
             e.printStackTrace();
         }
     }
@@ -150,7 +156,7 @@ public static void saveCalcMacrosToXML(
 
         u.appendChild(createElement(doc, "Age", String.valueOf(user.age())));
         u.appendChild(createElement(doc, "Weight", String.valueOf(user.weight())));
-        u.appendChild(createElement(doc, "HeightCm", String.valueOf(user.heightCm())));
+        u.appendChild(createElement(doc, "HeightCm", String.valueOf(user.height())));
         u.appendChild(createElement(doc, "Gender", user.gender().name()));
         u.appendChild(createElement(doc, "ActivityLevel", user.activityLevel().name()));
         u.appendChild(createElement(doc, "Goal", user.goal().name()));
@@ -171,7 +177,8 @@ public static void saveCalcMacrosToXML(
         saveDocumentToFile(doc, filePath);
         System.out.println("✅ Calculation saved to " + filePath);
 
-    } catch (Exception e) {
+    } catch (Exception e) 
+    {
         e.printStackTrace();
     }
 }
@@ -183,13 +190,15 @@ public static void saveCalcMacrosToXML(
 // this was a pain, mostly because its harder to create xml files from data than I expected.
 // thanks Geeks for Geeks
     // but this is futureproofing so its easier for the machine to parse later
-    private static Element createElement(Document doc, String name, String value) {
+    private static Element createElement(Document doc, String name, String value) 
+    {
         Element element = doc.createElement(name);
         element.appendChild(doc.createTextNode(value));
         return element;
     }
 // saves our data to the file itself
-    private static void saveDocumentToFile(Document doc, String filePath) throws Exception {
+    private static void saveDocumentToFile(Document doc, String filePath) throws Exception 
+    {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -198,7 +207,8 @@ public static void saveCalcMacrosToXML(
         transformer.transform(source, result);
     }
 // test main for pushing data to the files, prove it works and files exist in test cases
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         // test userList, list of overall users on the app. very basic
         // tests pushing multiple users. Currently set this way so we can append the file list with additional users
         List<User> users = List.of(
