@@ -9,7 +9,8 @@ import java.util.List;
  * DashboardScreen provides the main user interface where users can view and update
  * their profile, log meals, view meal history, and open analytics.
  */
-public class DashboardScreen extends JPanel {
+public class DashboardScreen extends JPanel
+{
     private final User user; // Current user
     private final JFrame parentFrame; // Reference to the main application frame
 
@@ -37,7 +38,8 @@ public class DashboardScreen extends JPanel {
     /**
      * Constructor sets up the layout and event handlers.
      */
-    public DashboardScreen(JFrame frame, User user) {
+    public DashboardScreen(JFrame frame, User user)
+    {
         this.parentFrame = frame;
         this.user = user;
 
@@ -68,19 +70,22 @@ public class DashboardScreen extends JPanel {
         JButton analyticsBtn = styledButton("View Analytics");
 
         // Log meal button opens modal dialog
-        logMealBtn.addActionListener(e -> {
+        logMealBtn.addActionListener(e ->
+        {
             List<MealEntry> meals = MealXML.loadMealsFromXML(user.username());
             new LogMealDialog(parentFrame, user, meals).setVisible(true);
         });
 
         // View history button changes panel
-        viewMealsBtn.addActionListener(e -> {
+        viewMealsBtn.addActionListener(e ->
+        {
             parentFrame.setContentPane(new MealHistoryScreen(parentFrame, user));
             parentFrame.revalidate();
         });
 
         // View analytics button opens chart screen
-        analyticsBtn.addActionListener(e -> {
+        analyticsBtn.addActionListener(e ->
+        {
             parentFrame.setContentPane(new AnalyticsScreen(parentFrame, user));
             parentFrame.revalidate();
         });
@@ -95,7 +100,8 @@ public class DashboardScreen extends JPanel {
     /**
      * Creates the user profile input form panel.
      */
-    private JPanel profileForm() {
+    private JPanel profileForm()
+    {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(WHITE);
@@ -103,7 +109,7 @@ public class DashboardScreen extends JPanel {
 
         // Populate fields with current user data
         weightField.setText(String.valueOf(user.weight()));
-        heightField.setText(String.valueOf(user.heightCm()));
+        heightField.setText(String.valueOf(user.height()));
         ageField.setText(String.valueOf(user.age()));
         activityBox.setSelectedItem(user.activityLevel());
         goalBox.setSelectedItem(user.goal());
@@ -127,7 +133,8 @@ public class DashboardScreen extends JPanel {
     /**
      * Creates the TDEE and macronutrient display panel.
      */
-    private JPanel dashboardStats() {
+    private JPanel dashboardStats()
+    {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createTitledBorder("Your Daily Target"));
@@ -160,7 +167,8 @@ public class DashboardScreen extends JPanel {
     /**
      * Creates a horizontal row with a label and input component.
      */
-    private JPanel labeledRow(String labelText, JComponent input) {
+    private JPanel labeledRow(String labelText, JComponent input)
+    {
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
         row.setBackground(WHITE);
 
@@ -180,7 +188,8 @@ public class DashboardScreen extends JPanel {
     /**
      * Returns a styled JButton with consistent formatting.
      */
-    private JButton styledButton(String text) {
+    private JButton styledButton(String text)
+    {
         JButton b = new JButton(text);
         b.setFont(new Font("Arial", Font.BOLD, 16));
         b.setBackground(ORANGE);
@@ -194,7 +203,8 @@ public class DashboardScreen extends JPanel {
      * Handles the update profile action, validates input, recalculates TDEE/macros,
      * saves to XML, and refreshes the screen.
      */
-    private void handleUpdate(ActionEvent e) {
+    private void handleUpdate(ActionEvent e)
+    {
         try {
             // Parse and validate form values
             double newWeight = Double.parseDouble(weightField.getText().trim());
@@ -228,7 +238,8 @@ public class DashboardScreen extends JPanel {
             parentFrame.setContentPane(new DashboardScreen(parentFrame, updatedUser));
             parentFrame.revalidate();
 
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex)
+        {
             // Show error if parsing fails
             JOptionPane.showMessageDialog(parentFrame, "Please enter valid numbers.", "Error", JOptionPane.ERROR_MESSAGE);
         }
