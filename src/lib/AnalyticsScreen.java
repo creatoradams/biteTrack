@@ -19,7 +19,8 @@ import java.util.TreeMap;
 /**
  * Displays an analytics dashboard with charts for meal data.
  */
-public class AnalyticsScreen extends JPanel {
+public class AnalyticsScreen extends JPanel
+{
     private final JFrame parentFrame;  // Reference to the parent window
     private final User user;           // Current logged-in user
     private final List<MealEntry> meals; // List of meals loaded from XML
@@ -33,7 +34,8 @@ public class AnalyticsScreen extends JPanel {
     /**
      * Constructor initializes layout and charts.
      */
-    public AnalyticsScreen(JFrame frame, User user) {
+    public AnalyticsScreen(JFrame frame, User user)
+    {
         this.parentFrame = frame;
         this.user = user;
         this.meals = MealXML.loadMealsFromXML(user.username());  // Load meal data from XML
@@ -62,7 +64,8 @@ public class AnalyticsScreen extends JPanel {
         backBtn.setBackground(ORANGE);
         backBtn.setForeground(WHITE);
         backBtn.setFocusPainted(false);
-        backBtn.addActionListener(e -> {
+        backBtn.addActionListener(e ->
+        {
             parentFrame.setContentPane(new DashboardScreen(parentFrame, user));
             parentFrame.revalidate(); // Refresh screen
         });
@@ -77,7 +80,8 @@ public class AnalyticsScreen extends JPanel {
     /**
      * Creates and returns a JPanel containing a bar chart of daily calories.
      */
-    private JPanel createBarChartPanel() {
+    private JPanel createBarChartPanel()
+    {
         Map<String, Integer> caloriesPerDay = new TreeMap<>(); // Keeps dates sorted
 
         // Aggregate total calories for each day
@@ -87,7 +91,8 @@ public class AnalyticsScreen extends JPanel {
 
         // Create dataset for bar chart
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        for (Map.Entry<String, Integer> entry : caloriesPerDay.entrySet()) {
+        for (Map.Entry<String, Integer> entry : caloriesPerDay.entrySet())
+        {
             dataset.addValue(entry.getValue(), "Calories", entry.getKey());
         }
 
@@ -117,7 +122,8 @@ public class AnalyticsScreen extends JPanel {
     /**
      * Creates and returns a JPanel containing a pie chart of total macronutrients.
      */
-    private JPanel createPieChartPanel() {
+    private JPanel createPieChartPanel()
+    {
         // Accumulate total grams of each macro
         int totalProtein = 0, totalCarbs = 0, totalFats = 0;
         for (MealEntry m : meals) {
