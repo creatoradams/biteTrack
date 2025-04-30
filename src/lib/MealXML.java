@@ -21,8 +21,10 @@ public class MealXML {
      * @param username the username used to generate the XML filename
      * @param meals    the list of MealEntry objects to save
      */
-    public static void saveMealsToXML(String username, List<MealEntry> meals) {
-        try {
+    public static void saveMealsToXML(String username, List<MealEntry> meals)
+    {
+        try
+        {
             // Create new XML document
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -33,7 +35,8 @@ public class MealXML {
             doc.appendChild(root);
 
             // Add each meal as a <Meal> element with child fields
-            for (MealEntry m : meals) {
+            for (MealEntry m : meals)
+            {
                 Element meal = doc.createElement("Meal");
                 root.appendChild(meal);
 
@@ -52,7 +55,8 @@ public class MealXML {
 
             transformer.transform(new DOMSource(doc), new StreamResult(new File(filename)));
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace(); // Log errors to console
         }
     }
@@ -63,11 +67,13 @@ public class MealXML {
      * @param username the username used to locate the XML file
      * @return list of MealEntry objects
      */
-    public static List<MealEntry> loadMealsFromXML(String username) {
+    public static List<MealEntry> loadMealsFromXML(String username)
+    {
         List<MealEntry> meals = new ArrayList<>();
         String filename = "meals_" + username + ".xml";
 
-        try {
+        try
+        {
             File file = new File(filename);
             if (!file.exists()) return meals; // Return empty list if file not found
 
@@ -92,7 +98,8 @@ public class MealXML {
                 meals.add(new MealEntry(date, name, calories, protein, carbs, fats));
             }
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace(); // Log errors
         }
 
@@ -102,7 +109,8 @@ public class MealXML {
     /**
      * Helper method to append a tag with text content to a parent element.
      */
-    private static void appendChild(Document doc, Element parent, String tag, String value) {
+    private static void appendChild(Document doc, Element parent, String tag, String value)
+    {
         Element e = doc.createElement(tag);
         e.appendChild(doc.createTextNode(value));
         parent.appendChild(e);
@@ -111,7 +119,8 @@ public class MealXML {
     /**
      * Helper method to retrieve the text content of a tag within a given element.
      */
-    private static String getValue(Element element, String tagName) {
+    private static String getValue(Element element, String tagName)
+    {
         NodeList nodes = element.getElementsByTagName(tagName);
         return nodes.getLength() > 0 ? nodes.item(0).getTextContent() : "";
     }
