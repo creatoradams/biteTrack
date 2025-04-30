@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff5186d6-44b2-467a-85a4-afac242e1eb9" name="Changes" comment="source files">
-      <change afterPath="$PROJECT_DIR$/src/lib/AnalyticsScreen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/DashboardScreen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/LogMealDialog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/MealEntry.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/MealHistoryScreen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/MealXML.java" afterDir="false" />
+    <list default="true" id="ff5186d6-44b2-467a-85a4-afac242e1eb9" name="Changes" comment="+ updated UI&#10;+ add meal log&#10;+ data visualization&#10;+ update profile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BiteTrackJava.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BiteTrackJava.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/HomeScreen.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/RegistrationScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/RegistrationScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +99,7 @@
       <workItem from="1745786295861" duration="32668000" />
       <workItem from="1745899444726" duration="399000" />
       <workItem from="1745961295902" duration="1325000" />
-      <workItem from="1745975214147" duration="7085000" />
+      <workItem from="1745975214147" duration="8528000" />
     </task>
     <task id="LOCAL-00001" summary="source files">
       <option name="closed" value="true" />
@@ -118,7 +109,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745821477612</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="+ updated UI&#10;+ add meal log&#10;+ data visualization&#10;+ update profile">
+      <option name="closed" value="true" />
+      <created>1745984281088</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1745984281088</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,6 +125,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="source files" />
-    <option name="LAST_COMMIT_MESSAGE" value="source files" />
+    <MESSAGE value="+ updated UI&#10;+ add meal log&#10;+ data visualization&#10;+ update profile" />
+    <option name="LAST_COMMIT_MESSAGE" value="+ updated UI&#10;+ add meal log&#10;+ data visualization&#10;+ update profile" />
   </component>
 </project>
