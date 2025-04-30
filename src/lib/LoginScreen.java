@@ -9,6 +9,9 @@ import java.awt.*;
 public class LoginScreen extends JPanel
 {
     private final JFrame parentFrame;
+    private final JTextField usernameField = new JTextField();
+    private final JPasswordField passwordField = new JPasswordField();
+
     public LoginScreen(JFrame frame)
     {
         this.parentFrame = frame;
@@ -28,8 +31,8 @@ public class LoginScreen extends JPanel
         //  gap
         form.add(Box.createRigidArea(new Dimension(0, 24)));
 
-        // “Email” label + text field
-        form.add(createFieldPanel("Email", new JTextField()));
+        // “Username” label + text field
+        form.add(createFieldPanel("Username", usernameField));
 
         // gap
         form.add(Box.createRigidArea(new Dimension(0, 12)));
@@ -134,7 +137,6 @@ public class LoginScreen extends JPanel
         // TODO: replace these with real credential checks and DB lookup
 
         parentFrame.getContentPane().removeAll();
-       // parentFrame.getContentPane().add(new HomeScreen());
         parentFrame.revalidate();
         parentFrame.repaint();
     }

@@ -8,14 +8,14 @@ public class RegistrationScreen extends JPanel
     // Create text fields for each input field
     private final JTextField firstNameField;
     private final JTextField lastNameField;
-    private final JTextField emailField;
+    private final JTextField userNameField;
     private final JTextField phoneField;
     private final JPasswordField passwordField;
     private final JPasswordField confirmPasswordField;
     private final JFrame parentFrame;
-    private final JTextField ageField       = new JTextField();
-    private final JTextField weightField    = new JTextField();
-    private final JTextField heightField    = new JTextField();
+    private final JTextField ageField = new JTextField();
+    private final JTextField weightField = new JTextField();
+    private final JTextField heightField = new JTextField();
     private final JComboBox<NutritionCalculator.Gender> genderCombo =
             new JComboBox<>(NutritionCalculator.Gender.values());
     private final JComboBox<NutritionCalculator.ActivityLevel> activityLevelCombo =
@@ -27,14 +27,14 @@ public class RegistrationScreen extends JPanel
         this.parentFrame = frame;
 
         // Set layout for the panel
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setAlignmentX(Component.CENTER_ALIGNMENT);
+        setLayout(new BorderLayout());
+        setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 20));
 
         // Create a form panel
         JPanel formPanel = new JPanel();
         formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
         formPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+        add(formPanel, BorderLayout.CENTER);
         // First Name field
         formPanel.add(createFieldPanel("First Name", firstNameField = new JTextField()));
 
@@ -42,7 +42,7 @@ public class RegistrationScreen extends JPanel
         formPanel.add(createFieldPanel("Last Name", lastNameField = new JTextField()));
 
         // Email field
-        formPanel.add(createFieldPanel("Email", emailField = new JTextField()));
+        formPanel.add(createFieldPanel("Username", userNameField = new JTextField()));
 
         // Phone field
         formPanel.add(createFieldPanel("Phone", phoneField = new JTextField()));
@@ -53,12 +53,12 @@ public class RegistrationScreen extends JPanel
         // Confirm Password field
         formPanel.add(createPasswordField("Confirm Password", confirmPasswordField = new JPasswordField()));
 
-        formPanel.add(createFieldPanel("Age (years)", ageField));
-        formPanel.add(createFieldPanel("Weight (lbs)", weightField));
-        formPanel.add(createFieldPanel("Height (cm)", heightField));
+        formPanel.add(createFieldPanel("Age", ageField));
+        formPanel.add(createFieldPanel("Weight", weightField));
+        formPanel.add(createFieldPanel("Height(in)", heightField));
 
         formPanel.add(createFieldPanel("Gender", genderCombo));
-        formPanel.add(createFieldPanel("Activity Level", activityLevelCombo));
+        formPanel.add(createFieldPanel("Activity", activityLevelCombo));
         formPanel.add(createFieldPanel("Goal", goalCombo));
 
 
@@ -103,6 +103,7 @@ public class RegistrationScreen extends JPanel
             combo.setPreferredSize(new Dimension(300, 40));
         }
 
+
         row.add(lbl);
         row.add(field);
         return row;
@@ -127,6 +128,8 @@ public class RegistrationScreen extends JPanel
     // Registration logic
     private void _register()
     {
+        System.out.println("_register reached");   //  ← temporary test line
+
         // Validate fields and perform registration logic
         if (firstNameField.getText().isEmpty())
         {
@@ -138,9 +141,9 @@ public class RegistrationScreen extends JPanel
             showMessage("Please enter your last name.");
             return;
         }
-        if (!isValidEmail(emailField.getText()))
+        if (!isValidUsername(userNameField.getText()))
         {
-            showMessage("Please enter a valid email address.");
+            showMessage("Please enter a valid username.");
             return;
         }
         if (phoneField.getText().isEmpty())
@@ -186,11 +189,11 @@ public class RegistrationScreen extends JPanel
         JOptionPane.showMessageDialog(parentFrame, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    // Validate email format using regex
-    private boolean isValidEmail(String email)
+    // Validate username format using regex
+    private boolean isValidUsername(String username)
     {
-        String emailPattern = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        return Pattern.matches(emailPattern, email);
+        // allow letters, numbers, underscores and dashes, 3–20 chars
+        return username.matches("^[A-Za-z0-9_-]{3,20}$");
     }
 
     // Navigate to login screen
@@ -216,7 +219,7 @@ public class RegistrationScreen extends JPanel
         // Gather and trim plain text values
         String firstName = firstNameField.getText().trim();
         String lastName  = lastNameField.getText().trim();
-        String fullName  = (firstName + " " + lastName).trim();
+        String username = userNameField.getText().trim();
 
         // Convert numeric strings to numbers
         int age = Integer.parseInt(ageField.getText().trim());
@@ -229,6 +232,14 @@ public class RegistrationScreen extends JPanel
         NutritionCalculator.Goal goal = (NutritionCalculator.Goal) goalCombo.getSelectedItem();
 
         // Build and return the immutable User record
-        return new User(fullName, age, weight, heightCm, gender, activityLevel, goal);
+        return new User(
+                username,
+                age,
+                weight,
+                heightCm,
+                gender,
+                activityLevel,
+                goal
+        );
     }
 }
