@@ -9,6 +9,8 @@ if I were to create an actual app, I would utilize a SQLite database
 this would allow for secure storage of data, and instead of having to pull multiple files or multiple objects
 from storage into memory, we would instead be able to pull what exactly we needed
 this is why I do not have any form of batch storage or retrieval, as this is just a working prototype
+
+Side Notes: maybe I should have made it autocreate a filepath, but I dont know how to make it automatically set and managed rn
 */
 package lib;
 // WHAT IN THE DEPENDENCIES
@@ -28,91 +30,97 @@ import java.util.List;
 // still need to implement a macros record, but should be easy since its already inside the Nutrition calculator
 public class Database {
 // XML document builder for saving a user list to an XML document for active storage
-    public static void saveUsersToXML(List<User> users, String filePath) {
-        // so far it saves users created to an aggregate list, we can split this to multiple files based on user name
-        try {
-            // document bulder BS, this is dark magic
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.newDocument();
-
-            Element root = doc.createElement("Users");
-            doc.appendChild(root);
-
-            for (User user : users) {
-                Element userElement = doc.createElement("User");
-                root.appendChild(userElement);
-
-                // saves our user values
-
-                userElement.appendChild(createElement(doc, "Name", user.name()));
-                userElement.appendChild(createElement(doc, "Age", String.valueOf(user.age())));
-                userElement.appendChild(createElement(doc, "WeightKg", String.valueOf(user.weight())));
-                userElement.appendChild(createElement(doc, "HeightCm", String.valueOf(user.heightCm())));
-                userElement.appendChild(createElement(doc, "Gender", user.gender().name()));
-                userElement.appendChild(createElement(doc, "ActivityLevel", user.activityLevel().name()));
-                userElement.appendChild(createElement(doc, "Goal", user.goal().name()));
-            }
-
-            saveDocumentToFile(doc, filePath);
-            // debug line
-            //System.out.println("✅ User data saved to " + filePath);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        /*
-        TBH this was so complex I thought about saving the data to a CSV for .txt and just custom write
-        the code parsing, would make it much more targeted
-        but this might be easier to upgrade to a SQLite instance
-        also makes it easier to pull the data from later
-         */
-    }
-// Function for saving our nutrition calculator record to an XML file
-public static void saveCalcMacrosToXML(User user, double totalCalories, NutritionCalculator.Goal goal, NutritionCalculator.Macronutrients macros, String filePath) {
+public static void saveUsersToXML(List<User> users) {
+    // saves users to a central aggregate list, and retrieval will be based on the email
+    String filePath = "users.xml";
     try {
+        // black magic of document building
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.newDocument();
 
-        // Root element
-        Element root = doc.createElement("UserMacronutrientCalculation");
+        Element root = doc.createElement("Users");
         doc.appendChild(root);
+        // saves user values for each value
+        // processes each individual user and saves them to the aggregate file
+        for (User user : users) {
+            Element u = doc.createElement("User");
+            root.appendChild(u);
 
-        // User element
-        Element userElement = doc.createElement("User");
-        root.appendChild(userElement);
+            u.appendChild(createElement(doc, "FirstName", user.firstName()));
+            u.appendChild(createElement(doc, "LastName", user.lastName()));
+            u.appendChild(createElement(doc, "Email", user.email()));
+            u.appendChild(createElement(doc, "Phone", user.phone()));
+            u.appendChild(createElement(doc, "Password", user.password()));   // remove in production!
 
-        userElement.appendChild(createElement(doc, "Name", user.name()));
-        userElement.appendChild(createElement(doc, "Age", String.valueOf(user.age())));
-        userElement.appendChild(createElement(doc, "WeightKg", String.valueOf(user.weight())));
-        userElement.appendChild(createElement(doc, "HeightCm", String.valueOf(user.heightCm())));
-        userElement.appendChild(createElement(doc, "Gender", user.gender().name()));
-        userElement.appendChild(createElement(doc, "ActivityLevel", user.activityLevel().name()));
-        userElement.appendChild(createElement(doc, "Goal", user.goal().name()));
+            u.appendChild(createElement(doc, "Age", String.valueOf(user.age())));
+            u.appendChild(createElement(doc, "Weight", String.valueOf(user.weight())));
+            u.appendChild(createElement(doc, "HeightCm", String.valueOf(user.heightCm())));
+            u.appendChild(createElement(doc, "Gender", user.gender().name()));
+            u.appendChild(createElement(doc, "ActivityLevel", user.activityLevel().name()));
+            u.appendChild(createElement(doc, "Goal", user.goal().name()));
 
-        // Calculation Parameters element
-        Element paramsElement = doc.createElement("CalculationParameters");
-        root.appendChild(paramsElement);
-        paramsElement.appendChild(createElement(doc, "TotalCalories", String.valueOf(totalCalories)));
-        paramsElement.appendChild(createElement(doc, "GoalUsed", goal.name()));
-
-        // Macronutrients element
-        Element macrosElement = doc.createElement("Macronutrients");
-        root.appendChild(macrosElement);
-
-        macrosElement.appendChild(createElement(doc, "ProteinGrams", String.valueOf(macros.proteinGrams())));
-        macrosElement.appendChild(createElement(doc, "CarbsGrams", String.valueOf(macros.carbsGrams())));
-        macrosElement.appendChild(createElement(doc, "FatsGrams", String.valueOf(macros.fatsGrams())));
-
+        }
         saveDocumentToFile(doc, filePath);
-        // debug line
-        System.out.println("✅ Macronutrient calculation saved to " + filePath);
+        System.out.println("✅ Users saved to " + filePath);
 
     } catch (Exception e) {
         e.printStackTrace();
     }
 }
+
+// Function for saving our nutrition calculator record to an XML file
+public static void saveCalcMacrosToXML(
+        User user,
+        double totalCalories,
+        NutritionCalculator.Goal goal,
+        NutritionCalculator.Macronutrients macros
+) {
+    // set file path based on users name
+    String filePath = user.getFullNameNoSpace() + "Nutrition.xml";
+    try {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.newDocument();
+
+        Element root = doc.createElement("UserMacronutrientCalculation");
+        doc.appendChild(root);
+
+        // Full User block
+        Element u = doc.createElement("User");
+        root.appendChild(u);
+        u.appendChild(createElement(doc, "FirstName", user.firstName()));
+        u.appendChild(createElement(doc, "LastName", user.lastName()));
+        u.appendChild(createElement(doc, "Email", user.email()));
+
+        u.appendChild(createElement(doc, "Age", String.valueOf(user.age())));
+        u.appendChild(createElement(doc, "Weight", String.valueOf(user.weight())));
+        u.appendChild(createElement(doc, "HeightCm", String.valueOf(user.heightCm())));
+        u.appendChild(createElement(doc, "Gender", user.gender().name()));
+        u.appendChild(createElement(doc, "ActivityLevel", user.activityLevel().name()));
+        u.appendChild(createElement(doc, "Goal", user.goal().name()));
+
+        // Calculation params
+        Element params = doc.createElement("CalculationParameters");
+        root.appendChild(params);
+        params.appendChild(createElement(doc, "TotalCalories", String.valueOf(totalCalories)));
+        params.appendChild(createElement(doc, "GoalUsed", goal.name()));
+
+        // Macronutrients
+        Element m = doc.createElement("Macronutrients");
+        root.appendChild(m);
+        m.appendChild(createElement(doc, "ProteinGrams", String.valueOf(macros.proteinGrams())));
+        m.appendChild(createElement(doc, "CarbsGrams",   String.valueOf(macros.carbsGrams())));
+        m.appendChild(createElement(doc, "FatsGrams",    String.valueOf(macros.fatsGrams())));
+
+        saveDocumentToFile(doc, filePath);
+        System.out.println("✅ Calculation saved to " + filePath);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
 
 
     // creating elements for text nodes in XML
@@ -138,31 +146,35 @@ public static void saveCalcMacrosToXML(User user, double totalCalories, Nutritio
         // test userList, list of overall users on the app. very basic
         // tests pushing multiple users. Currently set this way so we can append the file list with additional users
         List<User> users = List.of(
-                new User("Alice", 25, 60.0, 165.0,
+                new User("Alice", "Microsoft", "alice@onmicrosoft.com", "5015555050", "123456",
+                        30, 120, 160.5,
                         NutritionCalculator.Gender.FEMALE,
-                        NutritionCalculator.ActivityLevel.MODERATE,
+                        NutritionCalculator.ActivityLevel.LIGHT,
                         NutritionCalculator.Goal.CUT),
 
-                new User("Bob", 30, 75.0, 180.0,
+                new User("Bob", "Microsoft", "bob@onmicrosoft.com", "5015555050", "123456",
+                        22, 185, 175.5,
                         NutritionCalculator.Gender.MALE,
-                        NutritionCalculator.ActivityLevel.ACTIVE,
+                        NutritionCalculator.ActivityLevel.MODERATE,
                         NutritionCalculator.Goal.BULK)
         );
 
-        Database.saveUsersToXML(users, "testUsers.xml");
+        Database.saveUsersToXML(users);
 
         // saves the nutrition calculator recommendations
         // needed addition of the active user in the session to save the values
         // currently is free floating, we need to modify the nutrition calculator to account for current user
 
         // hello alice and bob from microsoft
-        User alice = new User("Alice", 25, 60.0, 165.0,
+        User alice = new User("Alice", "Microsoft", "alice@onmicrosoft.com", "5015555050", "123456",
+                30, 120, 160.5,
                 NutritionCalculator.Gender.FEMALE,
-                NutritionCalculator.ActivityLevel.MODERATE,
-                NutritionCalculator.Goal.CUT);
-        User bob = new User("Bob", 30, 80.0, 175.0,
-                NutritionCalculator.Gender.MALE,
                 NutritionCalculator.ActivityLevel.LIGHT,
+                NutritionCalculator.Goal.CUT);
+        User bob = new User("Bob", "Microsoft", "bob@onmicrosoft.com", "5015555050", "123456",
+                22, 185, 175.5,
+                NutritionCalculator.Gender.MALE,
+                NutritionCalculator.ActivityLevel.MODERATE,
                 NutritionCalculator.Goal.BULK);
 
         // since we need the nutrition calculator to take a calorie count as an argument, have a placeholder
@@ -173,8 +185,8 @@ public static void saveCalcMacrosToXML(User user, double totalCalories, Nutritio
                 NutritionCalculator.calculateMacros(totalCalories, bob.goal());
 
         // need to add a getter for the users name from user.java, that way we can create dynamic XML file names
-        Database.saveCalcMacrosToXML(alice, totalCalories, alice.goal(), aliceMacros, alice.name()+"macroGoals.xml");
-        Database.saveCalcMacrosToXML(bob, totalCalories, bob.goal(), bobMacros, bob.name()+"macroGoals.xml");
-        // I honest to god though XML's were easier than this
+        Database.saveCalcMacrosToXML(alice, totalCalories, alice.goal(), aliceMacros);
+        Database.saveCalcMacrosToXML(bob, totalCalories, bob.goal(), bobMacros);
+        // I honest to god thought XML's were easier than this
     }
 }
