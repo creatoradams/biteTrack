@@ -8,7 +8,8 @@ import java.util.List;
 /**
  * MealHistoryScreen displays a table view of all meals logged by the user.
  */
-public class MealHistoryScreen extends JPanel {
+public class MealHistoryScreen extends JPanel
+{
     private final JFrame parentFrame;      // Reference to the parent window
     private final User user;               // The currently logged-in user
     private final List<MealEntry> mealList; // List of meal entries from XML
@@ -22,7 +23,8 @@ public class MealHistoryScreen extends JPanel {
     /**
      * Constructor builds the meal history table and layout.
      */
-    public MealHistoryScreen(JFrame frame, User user) {
+    public MealHistoryScreen(JFrame frame, User user)
+    {
         this.parentFrame = frame;
         this.user = user;
         this.mealList = MealXML.loadMealsFromXML(user.username()); // Load user's meals from XML
