@@ -5,8 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ff5186d6-44b2-467a-85a4-afac242e1eb9" name="Changes" comment="source files">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/AnalyticsScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/DashboardScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/LogMealDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/MealEntry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/MealHistoryScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/MealXML.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BiteTrackJava.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BiteTrackJava.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/HomeScreen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/RegistrationScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/RegistrationScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,12 +42,12 @@
     &quot;assignee&quot;: &quot;creatoradams&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/creatoradams/biteTrack.git&quot;,
-    &quot;accountId&quot;: &quot;b6f16b19-8b88-4f95-9034-36e0e5816185&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/creatoradams/biteTrack.git",
+    "accountId": "90fc4e77-8905-414f-9a83-75666f829c55"
   }
-}</component>
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -51,28 +59,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.BiteTrackApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.LoginHelper.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ethan/OneDrive - University of Central Arkansas/Classes/Software Development Java/Final Project/biteTrack&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.BiteTrackApp.executor": "Run",
+    "Application.LoginHelper.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/rowde/OneDrive/Documents/classes/Spring 2025/Java/biteTrack2/jfreechart-1.0.19/lib/jfreechart-1.0.19.jar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "show.migrate.to.gradle.popup": "false",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\JAVA\BiteTrackJava\BiteTrackJava" />
@@ -97,6 +108,7 @@
       <workItem from="1745786295861" duration="32668000" />
       <workItem from="1745899444726" duration="399000" />
       <workItem from="1745961295902" duration="1325000" />
+      <workItem from="1745975214147" duration="7085000" />
     </task>
     <task id="LOCAL-00001" summary="source files">
       <option name="closed" value="true" />
